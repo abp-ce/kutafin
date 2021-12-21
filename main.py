@@ -66,11 +66,33 @@ def main():
 
         # Call the Sheets API
         sheet = service.spreadsheets()
+        data = []
         for i, t in enumerate(tables):
-            if is_Selenium: body = {'values': get_values(table=html_tables[i])}
-            else: body = {'values': get_values(table=frigate.table(t))}
-            res = sheet.values().update(spreadsheetId=SPREADSHEET_ID,range=f'{t}!B3',valueInputOption="RAW",body=body).execute()
-            print(res)
+            if is_Selenium: data.append({'range': f'{t}!B3', 'values': get_values(table=html_tables[i])})
+            else: data.append({'range': f'{t}!B3', 'values': get_values(table=frigate.table(t))})
+        body = {'valueInputOption': 'RAW', 'data': data}
+        res = sheet.values().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
+        print(res)
+        
+        sheets_ids = [0, 1292097999, 729629251]
+        requests = []
+        for id in sheets_ids:
+            ranges = [{'sheetId': id, 'startRowIndex': 2, 'startColumnIndex': 3, 'endColumnIndex': 4}]
+            requests.append({
+                'addConditionalFormatRule': {
+                    'rule': {
+                        'ranges': ranges,
+                        'booleanRule': {
+                            'condition': {'type': 'NOT_BLANK'},
+                            'format': {'backgroundColor': {'red': 0.1, 'green': 0.6, 'blue': 0.6}
+                            }
+                        }
+                    },
+                    'index': 0
+                }
+            })
+        res = sheet.batchUpdate(spreadsheetId=SPREADSHEET_ID, body={'requests': requests}).execute()
+        print(res)
 
 
     except HttpError as err:
