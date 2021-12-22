@@ -47,7 +47,7 @@ def get_values(table) -> list:
         if empty: val = [n_modem,'','','кр'] if red else [n_modem,'','1','']
         else: val = [n_modem,'','','']
         values.append(val)
-    print(values)
+    #print(values)
     return values
 
 def main():

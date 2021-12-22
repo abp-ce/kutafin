@@ -43,16 +43,16 @@ class Frigate:
         data = { 'act': 'form', 'email': self.user, 'password': self.password, 'lang': 'ru', 'section': 'auth', 
                 'g-recaptcha-response':'03AGdBq26IIQeKaVUDkWm5X23JIVRksApqpNSoNJ_a6OrQdyT3PWrt-A1Y-DDmZpjiGLHDtyOqDCewmVTKgNkgtnghptbO-yE0HHTjRECfXisqhXnlYViUkXnK4Gz2LQfZpShHu7y2nJpsZipWUcS3ef6Hl4jYFCqSLhxi07-SN1ibXYrI2FIjbWzg4iT5hcWE5IuXCpzrlmy-6C0zpOQJa5yUyR7SYd6QOk0zMgs2eQQfhUX9q_TF53bpnnj5mN_N_qm9sVMAgJiuNJ3GT5pPD77oL0NscT7GB-Cb_30VbViJ2ihzWKT6dmwXihRFuyQU1jKOdZzpJVFbAQx838v8SsFubDmzGU70SglPxYqL_XnKRWtWx5mxA_pvq6oMH2giEDXITHxq0Nv8hmOHNt4Y3o-sWmL3vNfd1xvwVBe33T6LoGHQNPeOnwsqheG'}
         r = requests.post(url, headers=self.headers, cookies=self.cookies, data = data)
-        print(r.text)
+        #print(r.text)
         time.sleep(20)
         pos = r.text.rfind('/')
         code_login = r.text[pos+1:].strip('"')
-        print(code_login)
+        #print(code_login)
         data =  {'code_login': code_login, 'lang': 'ru', 'last_code': self.email_code(), 'section': 'auth_admin', 'token': ''}
-        print(data)
+        #print(data)
         r = requests.post(url, headers=self.headers, cookies=self.cookies, data = data)
-        print(r.text)
-        print(r.cookies)
+        #print(r.text)
+        #print(r.cookies)
     
     def email_code(self) -> str:
         """
@@ -101,7 +101,7 @@ class Frigate:
         """
         url = f'https://frigate-proxy.ru/ru/server_modems/{table}'
         #self.headers['Cookie'] = '__ddg1=DmIqzcmiQU48mUKecMAn; PHPSESSID=36slubbsudum2o91as95ntfqp0; lang=ru; _ym_uid=1639645763231440132; _ym_d=1639645763; WhiteCallback_visit=15846147641; WhiteCallback_openedPages=pWHXE.DnvBH.qTuHl.uYDaj.HYDOo; WhiteCallback_timeAll=27304; WhiteCallback_timePage=27304; WhiteGenerator_89543_counter=false; WhiteGenerator_closed_89543=true; WidgetChat_invitation_2975690=true; WhiteQuiz_show_57938=onexit; WhiteQuiz_noShowWindow=1; WhiteCallback_updateMainPage=pWHXE; WhiteCallback_visitorId=8925594854; WhiteSaas_uniqueLead=no; _ym_isad=2; id=8390147; secret=3f7bd7efaae16'
-        print(self.headers)
+        #print(self.headers)
         self.cookies['id'] = '8390147'
         self.cookies['secret'] ='3f7bd7efaae16'
         r = requests.get(url=url, headers=self.headers, cookies=self.cookies)
