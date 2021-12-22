@@ -61,13 +61,17 @@ def main():
 
     secure_file = 'dazzling-ego-280408-24aba85079d1.json'
     tables = ['117','138','161']
-    if is_Selenium: html_tables = selenium_frigate(tables)
-    else: frigate = Frigate()
-    
-    # Login is not really needed. We need id and secret for modem page request.
-    # We can get id and secret form login or simply view the values in the browser in developer mode.
-    # Values are rarely changed.
-    #frigate.login() 
+    if is_Selenium: 
+        html_tables = selenium_frigate(tables)
+        if html_tables == None:
+            print('Ошибка: Не удалось получить получить таблицы')
+            return
+    else: 
+        frigate = Frigate()
+        # Login is not really needed. We need id and secret for modem page request.
+        # We can get id and secret form login or simply view the values in the browser in developer mode.
+        # Values are rarely changed.
+        #frigate.login() 
     
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -87,7 +91,7 @@ def main():
             else: data.append({'range': f'{t}!B3', 'values': get_values(table=frigate.table(t))})
         body = {'valueInputOption': 'RAW', 'data': data}
         res = sheet.values().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
-        print(res)
+        print(f'Обновлено: {res["totalUpdatedCells"]} ячеек на {res["totalUpdatedSheets"]} листах')
         # Conditional formatting
         sheets_ids = [0, 1292097999, 729629251]
         requests = []
@@ -107,7 +111,7 @@ def main():
                 }
             })
         res = sheet.batchUpdate(spreadsheetId=SPREADSHEET_ID, body={'requests': requests}).execute()
-        print(res)
+        #print(res)
 
 
     except HttpError as err:
