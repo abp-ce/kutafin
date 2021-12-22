@@ -15,11 +15,14 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     options.add_argument("--lang=ru")
 
     driver = webdriver.Chrome(options=options)
-    driver.get("https://frigate-proxy.ru/ru/type/all")
+    driver.get("https://frigate-proxy.ru/en/type/all")
 
     el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
+    #el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'white-saas-generator-btn-cancel')))
     print(el)
+    time.sleep(10)
     el.click()
+
     element = driver.find_element(by='link text',value='Login')
     print(element)
     element.click()

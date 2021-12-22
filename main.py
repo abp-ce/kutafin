@@ -13,6 +13,9 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '1HFbeHuiU_QNT45DSohVMw548EiFkgGSHyKdtafSvVXw'
 
 def is_empty_red(st) -> bool:
+    """
+    Script logic. Return two boolean values.
+    """
     #print(st)
     arr = st.split('<td>')
     empty, red = True, False
@@ -25,6 +28,9 @@ def is_empty_red(st) -> bool:
     return empty, red
 
 def get_values(table) -> list:
+    """
+    Return strings array for updating google sheet 
+    """
     regexIP = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
     hregexIP = r'<td>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}</td>'
 
@@ -44,7 +50,8 @@ def get_values(table) -> list:
 
 def main():
     """
-    secure_file - must be your own and email for the Service Access Key must be added to access settings with edit right
+    Fill google sheets.
+    Secure_file - must be your own and email for the Service Access Key must be added to access settings with edit right
     to google sheet 
     """
     is_Selenium = True if len(argv) == 1 else False
@@ -53,7 +60,12 @@ def main():
     tables = ['117','138','161']
     if is_Selenium: html_tables = selenium_frigate(tables)
     else: frigate = Frigate()
-    #frigate.login()
+    
+    # Login is not really needed. We need id and secret for modem page request.
+    # We can get id and secret form login or simply view the values in the browser in developer mode.
+    # Values are rarely changed.
+    #frigate.login() 
+    
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -73,7 +85,7 @@ def main():
         body = {'valueInputOption': 'RAW', 'data': data}
         res = sheet.values().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
         print(res)
-        
+        # Conditional formatting
         sheets_ids = [0, 1292097999, 729629251]
         requests = []
         for id in sheets_ids:

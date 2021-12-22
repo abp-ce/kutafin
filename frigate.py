@@ -52,6 +52,9 @@ class Frigate:
         print(r.cookies)
     
     def email_code(self) -> str:
+        """
+        Return value: Confirmation code from email
+        """
         mail = imaplib.IMAP4_SSL('imap.gmail.com')
         mail.login(self.user, self.password)
         mail.select("inbox")
@@ -73,6 +76,9 @@ class Frigate:
             return body.split()[-1]
 
     def table_from_html(self, html):
+        """
+        Separate modem table from html page and return table as <table>...</table> fragment.
+        """
         pos = html.find('<h2 class="page-title">Статус модемов по серверу')
         epos = html.find('<button type="button" class="proxy-btn">Купить прокси</button>')
         text = html[pos:epos]
@@ -82,17 +88,14 @@ class Frigate:
        
     
     def table(self, table) -> str:
+        """
+        Get html page for certain modem defined in table string parameter,
+        separate and return table as <table>...</table> fragment. 
+        """
         url = f'https://frigate-proxy.ru/ru/server_modems/{table}'
         #self.headers['Cookie'] = '__ddg1=DmIqzcmiQU48mUKecMAn; PHPSESSID=36slubbsudum2o91as95ntfqp0; lang=ru; _ym_uid=1639645763231440132; _ym_d=1639645763; WhiteCallback_visit=15846147641; WhiteCallback_openedPages=pWHXE.DnvBH.qTuHl.uYDaj.HYDOo; WhiteCallback_timeAll=27304; WhiteCallback_timePage=27304; WhiteGenerator_89543_counter=false; WhiteGenerator_closed_89543=true; WidgetChat_invitation_2975690=true; WhiteQuiz_show_57938=onexit; WhiteQuiz_noShowWindow=1; WhiteCallback_updateMainPage=pWHXE; WhiteCallback_visitorId=8925594854; WhiteSaas_uniqueLead=no; _ym_isad=2; id=8390147; secret=3f7bd7efaae16'
         print(self.headers)
         self.cookies['id'] = '8390147'
         self.cookies['secret'] ='3f7bd7efaae16'
         r = requests.get(url=url, headers=self.headers, cookies=self.cookies)
-        """
-        pos = r.text.find('<h2 class="page-title">Статус модемов по серверу')
-        epos = r.text.find('<button type="button" class="proxy-btn">Купить прокси</button>')
-        text = r.text[pos:epos]
-        pos = text.find('<table>')
-        epos = text.rfind('</table>')
-        """
         return self.table_from_html(r.text)
