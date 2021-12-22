@@ -59,7 +59,7 @@ def main():
     """
     is_Selenium = True if len(argv) == 1 else False
 
-    secure_file = 'dazzling-ego-280408-24aba85079d1.json'
+    secure_file = 'sf.json'
     tables = ['117','138','161']
     if is_Selenium: 
         html_tables = selenium_frigate(tables)

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dazzling-ego-280408",
+  "private_key_id": "24aba85079d1d0853dd66b487d598c3e21b6a456",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDMX8GLQgi0dlgu\n4FxrVvX2vgCirDDZaXuZBu4+bZlB1H9omGqk/NqMAXETZpC7sRh83rr/+8i/Nt0Q\ntRtQ3JedlaslsqDOowoOypypM4O3x8jCX5FBbHk8EXiPv+cwEY55d/XmHMI+j3ih\nVrGjYpp8QqcBAUf5iYOG98BAvaolALkUd2SwEp+HknIWH0IMCCWxp+MjKHmxoTco\n/gFdsOxxU4lhBfTzSUMMx6w9ErgToQyziIMD0vH7NppNRysp0cdWMI7hWWdEymMP\nogke2H9M4cNT4TkTRZe5yxgN6BlbRBWkwnyRhlpcDPAA7lsfFTIPxiCtLqhhThWD\nhN1NITNdAgMBAAECggEAJt0csm0bt6l7imp62KSgQEwQVd7VqTpQWSDCxFdWGfkd\nQ1gci4RT0OTjSlOqOS7rn69BMzV/jrERp8Aw0hcos7xG3/PQdYr2eiqYUOqtZRDW\nQfQnbKACi+Qsn3VYMsFb7QhdV+VnILtqro+MVywEgZWxKVVDiRXXz54kTotipAdg\nmY98ZHj97bB8pSmf5MnKM4aZe9hGWA6qzv95hLfnxdCvdOZN5+8sG+F4l7gsyMtN\ndKBnl4Uhl+xCF38lOOQuPmJPSFFw0nC3auhXydm0tZLWPnYKO9+15lWgvXTaLzlP\nstiaYcTrzatAR4JvBJ3uk/dVx3+rYc4Lvut8zJ1DlwKBgQDuSobPOt2PoYYhESBC\nihncg+XFqrM0Y1wS0ssiE6Uux5AviUQCLBYfFoV+AQbqnXGnLlPaAmYuVKC0kRAr\nH3RfZznI6S73fTFLG6ehqyTk4uvvoOcGtodc0lhYuPNmba+CEOG9jBykh4yysfY6\ne5+9QWe54i5jhfGGFyMXjte89wKBgQDbj/WTjv/ppXotLnwQidCk/kpomkjq3+uV\nTU8Dj9EqpwgrikzQUIy7XOdDkCiXcrY6Bl/S7Bu8SRKlecyEpWzhnubhhfsGEI0B\n+zFznnBEOcyqT9kPH/jJ5LczaS1cMIFMvJMvxDfFp9JgUPpbDs90lQ81Yi2d94vQ\nsfD78LchSwKBgBW13pB06YjTi5fpqonFcVPBBKc8xTUJtHLWl8FUDuGzNvTNyc90\n2tMcRy9SwqGPlLJJq0QaodqoxTeOW+3B4OVsTzx52licJGiWbXByWlssPZjIjSP0\nb2LKm1gCCdMUPUBZb2fIozduTihdxHRRnR0uH1g1Pkq9AmNYKk9UKV3DAoGAXaGq\nrF6TK+Rxkcr9BWCAJZx7xtfkuKT9JhJt26r9HB9XEJpN35g6K7yWsu1LIiq9I0mM\nm7osqcLPvNmQKhERubW15/7m6dMtDuc8U34BilbLvOWIPzb3NcHfjoEP4vycZ0kT\ny4716ciDoqdl3GcYeTMH5VAU/ASRD1KS3h3tOrkCgYEArtY9STp/v5WsPXu/fTZF\n5xy9CnEA0xnouWF8VOPRxOVyCB0IN6L69NlmplTQev44X7LQsXoBNqgYpoF3zBWg\nXXugXqPbt43ZknqcvlJ5h5LQV0tc0fsfCWAUAaw9e2h4EVT5zC/Rq8GoVMNCc9Sk\nSb5sy65qaqJF0a4JCd+ivoI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-drive@dazzling-ego-280408.iam.gserviceaccount.com",
+  "client_id": "111350887279046528261",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-drive%40dazzling-ego-280408.iam.gserviceaccount.com"
+}
