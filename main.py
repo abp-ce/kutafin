@@ -52,7 +52,8 @@ def get_values(table) -> list:
 
 def main():
     """
-    Заполняет google таблицу. Secure file оставил свой.
+    Заполняет google таблицу. Secure file должен быть свой и email от Service Access Key должен быть 
+    добавлен в список кому разрешено править файл.
     Secure_file - must be your own and email for the Service Access Key must be added to access settings with edit right
     to google sheet 
     """
