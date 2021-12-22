@@ -14,6 +14,7 @@ SPREADSHEET_ID = '1HFbeHuiU_QNT45DSohVMw548EiFkgGSHyKdtafSvVXw'
 
 def is_empty_red(st) -> bool:
     """
+    Логика скрипта. Возвращает два логических значения - пусто и красный (значок)
     Script logic. Return two boolean values.
     """
     #print(st)
@@ -29,6 +30,7 @@ def is_empty_red(st) -> bool:
 
 def get_values(table) -> list:
     """
+    Возвращает массив строк для обновления google таблицы 
     Return strings array for updating google sheet 
     """
     regexIP = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
@@ -50,7 +52,7 @@ def get_values(table) -> list:
 
 def main():
     """
-    Fill google sheets.
+    Заполняет google таблицу. Secure file оставил свой.
     Secure_file - must be your own and email for the Service Access Key must be added to access settings with edit right
     to google sheet 
     """

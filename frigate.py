@@ -36,6 +36,9 @@ class Frigate:
                         'WhiteCallback_mainPage': 'JtElB'}
 
     def login(self):
+        """
+        Собственно логин
+        """
         url = 'https://frigate-proxy.ru/req/form.php'
         data = { 'act': 'form', 'email': self.user, 'password': self.password, 'lang': 'ru', 'section': 'auth', 
                 'g-recaptcha-response':'03AGdBq26IIQeKaVUDkWm5X23JIVRksApqpNSoNJ_a6OrQdyT3PWrt-A1Y-DDmZpjiGLHDtyOqDCewmVTKgNkgtnghptbO-yE0HHTjRECfXisqhXnlYViUkXnK4Gz2LQfZpShHu7y2nJpsZipWUcS3ef6Hl4jYFCqSLhxi07-SN1ibXYrI2FIjbWzg4iT5hcWE5IuXCpzrlmy-6C0zpOQJa5yUyR7SYd6QOk0zMgs2eQQfhUX9q_TF53bpnnj5mN_N_qm9sVMAgJiuNJ3GT5pPD77oL0NscT7GB-Cb_30VbViJ2ihzWKT6dmwXihRFuyQU1jKOdZzpJVFbAQx838v8SsFubDmzGU70SglPxYqL_XnKRWtWx5mxA_pvq6oMH2giEDXITHxq0Nv8hmOHNt4Y3o-sWmL3vNfd1xvwVBe33T6LoGHQNPeOnwsqheG'}
@@ -53,6 +56,7 @@ class Frigate:
     
     def email_code(self) -> str:
         """
+        Возвращает код подтверждения из email.
         Return value: Confirmation code from email
         """
         mail = imaplib.IMAP4_SSL('imap.gmail.com')
@@ -77,6 +81,7 @@ class Frigate:
 
     def table_from_html(self, html):
         """
+        Выделяет и возвращает фрагмент кода, содержащий таблицу, в виде <table>...</table>
         Separate modem table from html page and return table as <table>...</table> fragment.
         """
         pos = html.find('<h2 class="page-title">Статус модемов по серверу')
@@ -89,6 +94,8 @@ class Frigate:
     
     def table(self, table) -> str:
         """
+        Берёт html текст, для запрашиваемого модема (параметр table, строка),
+        выделяет и возвращает фрагмент кода, содержащий таблицу, в виде <table>...</table>
         Get html page for certain modem defined in table string parameter,
         separate and return table as <table>...</table> fragment. 
         """

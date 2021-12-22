@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -8,6 +7,10 @@ import time
 from frigate import Frigate
 
 def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->str:
+    """
+    Реализует двухвакторную авторизацию и возвращает массив HTML таблиц (<table>...</table>) 
+    для запрашиваемых таблиц в параметре tables(массив строк)
+    """
     options = Options()
     options.add_argument('start-maximized')
     options.add_argument('disable-infobars')
@@ -30,11 +33,11 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     EC.element_to_be_clickable((By.XPATH, '//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/div[@class="inp-w"]/input[@name="email"]'))
     )
     print(email.text,email)
-    email.send_keys("dockeep9@gmail.com")
+    email.send_keys(user)
 
     password = driver.find_element(by='name',value='password')
     print(password)
-    password.send_keys("l4}$04|G")
+    password.send_keys(password)
     google = WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
     print('google',google)
     anchor = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "span.recaptcha-checkbox.goog-inline-block.recaptcha-checkbox-unchecked.rc-anchor-checkbox")))
