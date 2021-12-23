@@ -6,6 +6,21 @@ from selenium.webdriver.common.by import By
 import time
 from frigate import Frigate
 
+def check_iframe(driver, place):
+    """
+    Закрывает ws-quiz-ifame, если он есть
+    """
+    print(f'Exception: {place}')
+    try: 
+        driver.switch_to_frame("ws-quiz-iframe")
+        el = driver.find_element(by='class name',value='close-btn')
+        el.click()
+        driver.switch_to.default_content()
+        return
+    except Exception:
+        print('Exception: no ws-quiz-ifame')
+        return
+
 def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->str:
     """
     Реализует двухвакторную авторизацию и возвращает массив HTML таблиц (<table>...</table>) 
@@ -24,7 +39,7 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
         el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
         #el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'white-saas-generator-btn-cancel')))
     except Exception:
-        print('Exception: white-saas-generator-btn-cancel')
+        check_iframe(driver, 'white-saas-generator-btn-cancel')
         return None
     else: 
         time.sleep(10)
@@ -32,26 +47,26 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
 
     try: element = driver.find_element(by='link text',value='Login')
     except Exception: 
-        print('Exception: Login')
+        check_iframe(driver, 'Login')
         return None
     else: element.click()
     try: email = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, '//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/div[@class="inp-w"]/input[@name="email"]'))
         )
     except Exception: 
-        print('Exception: User')
+        check_iframe(driver, 'User')
         return None
     else: email.send_keys(user)
 
     try: passwd = driver.find_element(by='name',value='password')
     except Exception:
-        print('Exception: Password')
+        check_iframe(driver, 'Password')
         return None
     else: passwd.send_keys(password)
 
     try: google = WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
     except Exception:
-        print('Exception: google')
+        check_iframe(driver, 'google')
         return None
     else:
         anchor = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "span.recaptcha-checkbox.goog-inline-block.recaptcha-checkbox-unchecked.rc-anchor-checkbox")))
@@ -67,7 +82,7 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     code = frigate.email_code()
     try: ver_code = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="filter-item"]/input[1]')))
     except Exception:
-        print('Exception: verification code')
+        check_iframe(driver, 'verification code')
         return None
     else: ver_code.send_keys(code)
     submit = driver.find_element(by='xpath',value='//div[@class="forgot-pass-w"]/form[1]/button[1]')
