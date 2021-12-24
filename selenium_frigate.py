@@ -13,7 +13,8 @@ def check_iframe(driver, place):
     print(f'Exception: {place}')
     try: 
         driver.switch_to_frame("ws-quiz-iframe")
-        el = driver.find_element(by='class name',value='close-btn')
+        #el = driver.find_element(by='class name',value='close-btn')
+        el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME,'close-btn')))
         el.click()
         driver.switch_to.default_content()
         return True
@@ -33,23 +34,21 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     options.add_argument("--lang=ru")
 
     driver = webdriver.Chrome(options=options)
-    driver.get("https://frigate-proxy.ru/en/type/all")
+    driver.get("https://frigate-proxy.ru/ru/type/all")
 
     try:
-        el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
-        #el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'white-saas-generator-btn-cancel')))
+        el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME,'white-saas-generator-btn-cancel')))
     except Exception:
         if check_iframe(driver, 'white-saas-generator-btn-cancel'):
-            el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
+            el = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME,'white-saas-generator-btn-cancel')))
         else: return None
     finally: 
-        time.sleep(10)
         el.click()
 
-    try: element = driver.find_element(by='link text',value='Login')
+    try: element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//a[@href="come-in"]')))
     except Exception: 
         if check_iframe(driver, 'Login'):
-            element = driver.find_element(by='link text',value='Login')
+            element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,'//a[@href="come-in"]')))
         else: return None
     finally: element.click()
 
@@ -70,10 +69,10 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
         else: return None
     finally: passwd.send_keys(password)
 
-    try: google = WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
+    try: WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
     except Exception:
         if check_iframe(driver, 'google'):
-            google = WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
+            WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "iframe[src^='https://www.google.com/recaptcha/api2/anchor']")))
         else: return None
     finally:
         anchor = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "span.recaptcha-checkbox.goog-inline-block.recaptcha-checkbox-unchecked.rc-anchor-checkbox")))
@@ -84,7 +83,7 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     submit = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/button[1]')))
     submit.click()
     # Задержка на получение email
-    time.sleep(30)
+    time.sleep(15)
     frigate = Frigate()
     code = frigate.email_code()
     try: ver_code = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[@class="filter-item"]/input[1]')))
