@@ -1,10 +1,23 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 import time
 from frigate import Frigate
+
+def try_exc(driver, by, value, place, keys = None):
+    """
+    Проверяет доступность элемента, если не доступен, проверяет и закрывает
+    ws-quiz-ifame и наконец обрабатывает начальный элемент
+    """
+    try:
+        el = driver.find_element(by=by,value=value)
+    except Exception:
+        if check_iframe(driver, place):
+            el = driver.find_element(by=by,value=value)
+        else: return None
+    finally:
+        if keys: el.send_keys(keys)
+        else: el.click()
+    return "Done"
 
 def check_iframe(driver, place):
     """
@@ -36,34 +49,15 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     driver.implicitly_wait(10)
     driver.get("https://frigate-proxy.ru/ru/type/all")
     
-    try:
-        el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
-    except Exception:
-        if check_iframe(driver, 'white-saas-generator-btn-cancel'):
-            el = driver.find_element(by='class name',value='white-saas-generator-btn-cancel')
-        else: return None
-    finally: 
-        el.click()
-    
-    try: element = driver.find_element(by='xpath',value='//a[@href="come-in"]')
-    except Exception: 
-        if check_iframe(driver, 'Login'): element = driver.find_element(by='xpath',value='//a[@href="come-in"]')
-        else: return None
-    finally: element.click()
+    if try_exc(driver, 'class name', 'white-saas-generator-btn-cancel', 'white-saas-generator-btn-cancel') == None: return None
+        
+    if try_exc(driver, 'xpath', '//a[@href="come-in"]', 'Login') == None: return None
 
-    try: email = driver.find_element(by='xpath',value='//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/div[@class="inp-w"]/input[@name="email"]')
-    except Exception: 
-        if check_iframe(driver, 'User'):
-            email = driver.find_element(by='xpath',value='//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/div[@class="inp-w"]/input[@name="email"]')
-        else: return None
-    finally: email.send_keys(user)
-
-    try: passwd = driver.find_element(by='name',value='password')
-    except Exception:
-        if check_iframe(driver, 'Password'): passwd = driver.find_element(by='name',value='password')
-        else: return None
-    finally: passwd.send_keys(password)
+    if try_exc(driver, 'xpath', '//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/div[@class="inp-w"]/input[@name="email"]', 
+        'User', user) == None: return None
     
+    if try_exc(driver, 'name', 'password', 'Password', password) == None: return None
+
     try:
         driver.switch_to.frame(driver.find_element(by='css selector',value='iframe[src^="https://www.google.com/recaptcha/api2/anchor"]')) 
     except Exception:
@@ -76,22 +70,17 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     # Задержка на заполнение captcha
     time.sleep(40)
     driver.switch_to.default_content()
-    submit = driver.find_element(by='xpath',value='//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/button[1]')
-    submit.click()
+
+    if try_exc(driver, 'xpath', '//div[@id="js_come-in"]/div[@class="popup_content"]/form[@class="popup-form"]/button[1]', 'Submit 1') == None: return None
+
     # Задержка на получение email
     time.sleep(15)
     frigate = Frigate()
     code = frigate.email_code()
-    try: 
-        ver_code = driver.find_element(by='xpath',value='//div[@class="filter-item"]/input[1]')
-    except Exception:
-        if check_iframe(driver, 'verification code'):
-            ver_code = driver.find_element(by='xpath',value='//div[@class="filter-item"]/input[1]')
-        else: return None
-    finally: ver_code.send_keys(code)
-    submit = driver.find_element(by='xpath',value='//div[@class="forgot-pass-w"]/form[1]/button[1]')
-    submit.click()
-    time.sleep(5)
+
+    if try_exc(driver, 'xpath', '//div[@class="filter-item"]/input[1]', 'Verification code', code) == None: return None
+
+    if try_exc(driver, 'xpath', '//div[@class="forgot-pass-w"]/form[1]/button[1]', 'Submit 2') == None: return None
 
     original_window = driver.current_window_handle
     res = []
