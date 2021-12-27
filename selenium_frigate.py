@@ -41,9 +41,9 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     """
     options = Options()
     options.add_argument('start-maximized')
-    options.add_argument('disable-infobars')
-    options.add_argument("--disable-notifications")
-    options.add_argument("--lang=ru")
+    #options.add_argument('disable-infobars')
+    #options.add_argument("--disable-notifications")
+    #options.add_argument("--lang=ru")
 
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(10)
