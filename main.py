@@ -1,5 +1,4 @@
 from __future__ import print_function
-import re
 from sys import argv
 
 from googleapiclient.discovery import build
@@ -11,44 +10,6 @@ from selenium_frigate import selenium_frigate
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 SPREADSHEET_ID = '1HFbeHuiU_QNT45DSohVMw548EiFkgGSHyKdtafSvVXw'
-
-def is_empty_red(st) -> bool:
-    """
-    Логика скрипта. Возвращает два логических значения - пусто и красный (значок)
-    Script logic. Return two boolean values.
-    """
-    #print(st)
-    arr = st.split('<td>')
-    empty, red = True, False
-    for i in range(len(arr)-2): 
-        if not (arr[i] == '' or arr[i] == '</td>'):
-            empty = False
-            break
-    if 'exclamation-icon.png' in arr[-1]:
-        red = True
-    return empty, red
-
-def get_values(table) -> list:
-    """
-    Возвращает массив строк для обновления google таблицы 
-    Return strings array for updating google sheet 
-    """
-    regexIP = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-    hregexIP = r'<td>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}</td>'
-
-    arr = re.findall(regexIP,table)
-    tarr = re.split(hregexIP,table)
-    values = []
-    for i, ar in enumerate(arr):
-        a = ar[ar.find('.')+1:]
-        n_modem = a[a.find('.')+1:a.rfind('.')]
-        empty, red = is_empty_red(tarr[i+1])
-        #print(n_modem,empty,red)
-        if empty: val = [n_modem,'','','кр'] if red else [n_modem,'','1','']
-        else: val = [n_modem,'','','']
-        values.append(val)
-    #print(values)
-    return values
 
 def main():
     """
@@ -74,10 +35,6 @@ def main():
         #frigate.login() 
     
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-
     creds = service_account.Credentials.from_service_account_file(secure_file, scopes=SCOPES)
 
     try:
@@ -87,8 +44,8 @@ def main():
         sheet = service.spreadsheets()
         data = []
         for i, t in enumerate(tables):
-            if is_Selenium: data.append({'range': f'{t}!B3', 'values': get_values(table=html_tables[i])})
-            else: data.append({'range': f'{t}!B3', 'values': get_values(table=frigate.table(t))})
+            if is_Selenium: data.append({'range': f'{t}!B3', 'values': html_tables[i]})
+            else: data.append({'range': f'{t}!B3', 'values': frigate.table(t)})
         body = {'valueInputOption': 'RAW', 'data': data}
         res = sheet.values().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
         print(f'Обновлено: {res["totalUpdatedCells"]} ячеек на {res["totalUpdatedSheets"]} листах')
@@ -111,8 +68,6 @@ def main():
                 }
             })
         res = sheet.batchUpdate(spreadsheetId=SPREADSHEET_ID, body={'requests': requests}).execute()
-        #print(res)
-
 
     except HttpError as err:
         print(err)

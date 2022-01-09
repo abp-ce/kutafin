@@ -41,15 +41,12 @@ def selenium_frigate(tables, user='dockeep9@gmail.com', password='l4}$04|G') ->s
     """
     options = Options()
     options.add_argument('start-maximized')
-    #options.add_argument('disable-infobars')
-    #options.add_argument("--disable-notifications")
-    #options.add_argument("--lang=ru")
 
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(10)
     driver.get("https://frigate-proxy.ru/ru/type/all")
     
-    if try_exc(driver, 'class name', 'white-saas-generator-btn-cancel', 'white-saas-generator-btn-cancel') == None: return None
+    #if try_exc(driver, 'class name', 'white-saas-generator-btn-cancel', 'white-saas-generator-btn-cancel') == None: return None
         
     if try_exc(driver, 'xpath', '//a[@href="come-in"]', 'Login') == None: return None
 
